@@ -2,14 +2,14 @@ import pandas as pd
 
 # 파일 불러오기
 
-data_19_1 = pd.read_csv('C:/Users/김유정/대학/2024-2/전통/기말프로젝트/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_01.csv')
-data_19_2 = pd.read_csv('C:/Users/김유정/대학/2024-2/전통/기말프로젝트/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_03.csv')
-data_19_3 = pd.read_csv('C:/Users/김유정/대학/2024-2/전통/기말프로젝트/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_04.csv')
+data_19_1 = pd.read_csv('상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_01.csv')
+data_19_2 = pd.read_csv('상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_03.csv')
+data_19_3 = pd.read_csv('상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_04.csv')
 
-data_21_1 = pd.read_csv("C:/Users/김유정/대학/2024-2/전통/기말프로젝트/상가업소_202106/소상공인시장진흥공단_상가(상권)정보_경기_202106.csv")
-data_21_2 = pd.read_csv("C:/Users/김유정/대학/2024-2/전통/기말프로젝트/상가업소_202106/소상공인시장진흥공단_상가(상권)정보_부산_202106.csv")
-data_21_3 = pd.read_csv("C:/Users/김유정/대학/2024-2/전통/기말프로젝트/상가업소_202106/소상공인시장진흥공단_상가(상권)정보_서울_202106.csv")
-data_21_4 = pd.read_csv("C:/Users/김유정/대학/2024-2/전통/기말프로젝트/상가업소_202106/소상공인시장진흥공단_상가(상권)정보_제주_202106.csv")
+data_21_1 = pd.read_csv("상가업소_202106/소상공인시장진흥공단_상가(상권)정보_경기_202106.csv")
+data_21_2 = pd.read_csv("상가업소_202106/소상공인시장진흥공단_상가(상권)정보_부산_202106.csv")
+data_21_3 = pd.read_csv("상가업소_202106/소상공인시장진흥공단_상가(상권)정보_서울_202106.csv")
+data_21_4 = pd.read_csv("상가업소_202106/소상공인시장진흥공단_상가(상권)정보_제주_202106.csv")
 filtered_2019_2 = data_19_2[data_19_2['시도명'] == '경기도']
 filtered_2019_3 = data_19_3[data_19_3['시도명'] == '제주특별자치도']
 
@@ -35,16 +35,29 @@ print(f"폐업률: {closed_rate:.2f}%")
 print("\n=====\n")
 
 # 대분류별 폐업률
-# 각 대분류별 폐업률 계산
 for category in categories:
-    total_stores_in_category_19 = data_19[data_19['상권업종대분류명'] == category]
-    closed_stores_in_category = closed_stores[closed_stores['상권업종대분류명'] == category]
+    if category=='관광/여가/오락':
+        total_stores_in_category_19 = data_19[(data_19['상권업종대분류명'] == category) & (data_19['상권업종중분류명'] != '스포츠/운동')]
+        closed_stores_in_category = closed_stores[(closed_stores['상권업종대분류명'] == category) & (closed_stores['상권업종중분류명'] != '스포츠/운동')]
+    
+    else:
+        total_stores_in_category_19 = data_19[data_19['상권업종대분류명'] == category]
+        closed_stores_in_category = closed_stores[closed_stores['상권업종대분류명'] == category]
     
     if len(total_stores_in_category_19) > 0:  # 대분류에 데이터가 있는지 확인
         closure_rate_category = len(closed_stores_in_category) / len(total_stores_in_category_19) * 100
         print(f"'{category}' 업종의 폐업률: {closure_rate_category:.2f}%")
     else:
         print(f"'{category}' 업종에 대한 데이터가 없습니다.")
+
+total_stores_in_category_19 = data_19[(data_19['상권업종중분류명'] =='스포츠/운동') | (data_19['상권업종대분류명']=='스포츠') ]
+closed_stores_in_category = closed_stores[(closed_stores['상권업종중분류명'] == '스포츠/운동')|(closed_stores['상권업종대분류명']=='스포츠')]
+    
+if len(total_stores_in_category_19) > 0:  # 대분류에 데이터가 있는지 확인
+    closure_rate_category = len(closed_stores_in_category) / len(total_stores_in_category_19) * 100
+    print(f"'스포츠/운동' 업종의 폐업률: {closure_rate_category:.2f}%")
+else:
+    print(f"'스포츠/운동' 업종에 대한 데이터가 없습니다.")
 print("\n=====\n")
 
 middle_categories=['음/식료품소매', '가전제품소매']
@@ -61,15 +74,12 @@ for group, subcategories in group_mapping.items():
     closed_stores_in_group = closed_stores[closed_stores['상권업종중분류명'].isin(subcategories)]
     
     
-    if len(total_stores_in_category_19) > 0:  # 중분류에 데이터가 있는지 확인
-        closure_rate_category = len(closed_stores_in_category) / len(total_stores_in_category_19) * 100
-        print(f"'{group}' 업종의 폐업률: {closure_rate_category:.2f}%")
+    if len(total_stores_in_group) > 0:  # 중분류에 데이터가 있는지 확인
+        closure_rate_group = len(closed_stores_in_group) / len(total_stores_in_group) * 100
+        print(f"'{group}' 업종의 폐업률: {closure_rate_group:.2f}%")
     else:
         print(f"'{group}' 업종에 대한 데이터가 없습니다.")
 print("\n=====\n")
-
-
-
 
 
 # 개업률
@@ -80,16 +90,30 @@ print(f"개업률: {open_rate:.2f}%")
 print("\n=====\n")
 
 
-# 각 대분류별 폐업률 계산
+# 각 대분류별 개업률 계산
 for category in categories:
-    total_stores_in_category_19 = data_19[data_19['상권업종대분류명'] == category]
-    open_stores_in_category = open_stores[open_stores['상권업종대분류명'] == category]
+    if category=='관광/여가/오락':
+        total_stores_in_category_19 = data_19[(data_19['상권업종대분류명'] == category) & (data_19['상권업종중분류명'] != '스포츠/운동')]
+        open_stores_in_category = open_stores[(open_stores['상권업종대분류명'] == category) & (open_stores['상권업종중분류명'] != '스포츠/운동')]
+    
+    else:
+        total_stores_in_category_19 = data_19[data_19['상권업종대분류명'] == category]
+        open_stores_in_category = open_stores[open_stores['상권업종대분류명'] == category]
     
     if len(total_stores_in_category_19) > 0:  # 대분류에 데이터가 있는지 확인
         open_rate_category = len(open_stores_in_category) / len(total_stores_in_category_19) * 100
-        print(f"'{category}' 업종의 폐업률: {open_rate_category:.2f}%")
+        print(f"'{category}' 업종의 개업률: {open_rate_category:.2f}%")
     else:
         print(f"'{category}' 업종에 대한 데이터가 없습니다.")
+
+total_stores_in_category_19 = data_19[(data_19['상권업종중분류명'] =='스포츠/운동') | (data_19['상권업종대분류명']=='스포츠') ]
+open_stores_in_category = open_stores[(open_stores['상권업종중분류명'] == '스포츠/운동')|(open_stores['상권업종대분류명']=='스포츠')]
+
+if len(total_stores_in_category_19) > 0:  # 대분류에 데이터가 있는지 확인
+    open_rate_category = len(open_stores_in_category) / len(total_stores_in_category_19) * 100
+    print(f"'스포츠/운동' 업종의 개업률: {open_rate_category:.2f}%")
+else:
+    print(f"'스포츠/운동' 업종에 대한 데이터가 없습니다.")
 print("\n=====\n")
 
 
@@ -99,9 +123,9 @@ for group, subcategories in group_mapping.items():
     open_stores_in_group = open_stores[open_stores['상권업종중분류명'].isin(subcategories)]
     
     
-    if len(total_stores_in_category_19) > 0:  # 중분류에 데이터가 있는지 확인
-        open_rate_category = len(open_stores_in_category) / len(total_stores_in_category_19) * 100
-        print(f"'{group}' 업종의 개업률: {closure_rate_category:.2f}%")
+    if len(total_stores_in_group) > 0:  # 중분류에 데이터가 있는지 확인
+        open_rate_group = len(open_stores_in_group) / len(total_stores_in_group) * 100
+        print(f"'{group}' 업종의 개업률: {open_rate_group:.2f}%")
     else:
         print(f"'{group}' 업종에 대한 데이터가 없습니다.")
 print("\n=====\n")
