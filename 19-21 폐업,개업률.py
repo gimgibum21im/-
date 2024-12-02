@@ -50,8 +50,8 @@ for category in categories:
     else:
         print(f"'{category}' 업종에 대한 데이터가 없습니다.")
 
-total_stores_in_category_19 = data_19[(data_19['상권업종중분류명'] =='스포츠/운동') | (data_19['상권업종대분류명']=='스포츠') ]
-closed_stores_in_category = closed_stores[(closed_stores['상권업종중분류명'] == '스포츠/운동')|(closed_stores['상권업종대분류명']=='스포츠')]
+total_stores_in_category_19 = data_19[(data_19['상권업종중분류명'] =='스포츠/운동') | (data_19['상권업종대분류명']=='스포츠') | (data_19['상권업종중분류명']=='학원-예능취미체육') ]
+closed_stores_in_category = closed_stores[(closed_stores['상권업종중분류명'] == '스포츠/운동')|(closed_stores['상권업종대분류명']=='스포츠') | (closed_stores['상권업종중분류명']=='학원-예능취미체육')]
     
 if len(total_stores_in_category_19) > 0:  # 대분류에 데이터가 있는지 확인
     closure_rate_category = len(closed_stores_in_category) / len(total_stores_in_category_19) * 100
@@ -106,8 +106,8 @@ for category in categories:
     else:
         print(f"'{category}' 업종에 대한 데이터가 없습니다.")
 
-total_stores_in_category_19 = data_19[(data_19['상권업종중분류명'] =='스포츠/운동') | (data_19['상권업종대분류명']=='스포츠') ]
-open_stores_in_category = open_stores[(open_stores['상권업종중분류명'] == '스포츠/운동')|(open_stores['상권업종대분류명']=='스포츠')]
+total_stores_in_category_19 = data_19[(data_19['상권업종중분류명'] =='스포츠/운동') | (data_19['상권업종대분류명']=='스포츠') | (data_19['상권업종중분류명']=='학원-예능취미체육')]
+open_stores_in_category = open_stores[(open_stores['상권업종중분류명'] == '스포츠/운동')|(open_stores['상권업종대분류명']=='스포츠')| (open_stores['상권업종중분류명']=='학원-예능취미체육')]
 
 if len(total_stores_in_category_19) > 0:  # 대분류에 데이터가 있는지 확인
     open_rate_category = len(open_stores_in_category) / len(total_stores_in_category_19) * 100
