@@ -1,5 +1,5 @@
 from rate_17_19 import data_17, closed_stores_17_19, open_stores_17_19
-from rate_19_21 import data_19, closed_stores_19_21, open_stores_19_21
+from rate_19_21 import data_19, data_21, closed_stores_19_21, open_stores_19_21
 from scipy.stats import ttest_ind
 
 
@@ -71,4 +71,55 @@ print("p-값:", p_value_opening)
 if p_value_opening < 0.05:
     print("17-19와 19-21의 개업률 간에 통계적으로 유의미한 차이가 있습니다.")
 else:
+
     print("17-19와 19-21의 개업률 간에 통계적으로 유의미한 차이가 없습니다.")
+
+
+
+def get_closed_store_ids(data_17, data_19):
+    """
+    17-19년 사이 폐업한 가게의 업소번호 리스트를 반환.
+    """
+    closed_stores = data_17[~data_17[['상가업소번호']].apply(tuple, axis=1).isin(data_19[['상가업소번호']].apply(tuple, axis=1))]
+    return closed_stores['상가업소번호'].tolist()
+
+def get_closed_store_ids(data_19, data_21):
+    """
+    17-19년 사이 폐업한 가게의 업소번호 리스트를 반환.
+    """
+    closed_stores = data_19[~data_19[['상가업소번호']].apply(tuple, axis=1).isin(data_21[['상가업소번호']].apply(tuple, axis=1))]
+    return closed_stores['상가업소번호'].tolist()
+
+
+# 17-19년 폐업한 가게 리스트
+closed_store_ids_17_19 = get_closed_store_ids(data_17, data_19)
+
+# 19-21년 폐업한 가게 리스트 (비슷한 방식으로 구할 수 있음)
+closed_store_ids_19_21 = get_closed_store_ids(data_19, data_21)
+
+print("17-19년 폐업한 가게 수:", len(closed_store_ids_17_19))
+print("19-21년 폐업한 가게 수:", len(closed_store_ids_19_21))
+
+
+from scipy.stats import chi2_contingency
+
+# 예시: 대분류별 폐업 가게 수 계산
+for category in categories:
+    total_stores_in_category_17 = data_17[data_17['상권업종대분류명'] == category]
+    closed_stores_in_category_17_19 = data_17[data_17['상가업소번호'].isin(closed_store_ids_17_19) & 
+                                              (data_17['상권업종대분류명'] == category)]
+    
+    total_stores_in_category_19 = data_19[data_19['상권업종대분류명'] == category]
+    closed_stores_in_category_19_21 = data_19[data_19['상가업소번호'].isin(closed_store_ids_19_21) & 
+                                              (data_19['상권업종대분류명'] == category)]
+
+    observed = [
+        [len(closed_stores_in_category_17_19), len(total_stores_in_category_17) - len(closed_stores_in_category_17_19)],
+        [len(closed_stores_in_category_19_21), len(total_stores_in_category_19) - len(closed_stores_in_category_19_21)]
+    ]
+    
+    chi2, p, _, _ = chi2_contingency(observed)
+    print(f"'{category}' 업종의 폐업률 차이에 대한 p-value: {p:.5f}")
+
+
+
