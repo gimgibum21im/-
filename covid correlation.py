@@ -1,33 +1,22 @@
 import pandas as pd
+import os
 import requests
 import xml.etree.ElementTree as ET
 from scipy.stats import pearsonr
 
-data_19_1 = pd.read_csv('상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_01.csv')
-data_19_2 = pd.read_csv('상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_03.csv')
-data_19_3 = pd.read_csv('상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_04.csv')
-filtered_2019_2 = data_19_2[data_19_2['시도명'] == '경기도']
-filtered_2019_3 = data_19_3[data_19_3['시도명'] == '제주특별자치도']
-filtered_data_list_2019 = []
-filtered_data_list_2019.append(data_19_1)
-filtered_data_list_2019.append(filtered_2019_2)
-filtered_data_list_2019.append(filtered_2019_3)
-merged_data_2019 = pd.concat(filtered_data_list_2019, ignore_index=True)
+def load_data(year, region):
+    filename = f"상가업소_{year}/{year}_{region}.csv"
+    if os.path.exists(filename):
+        return pd.read_csv(filename)
+    else:
+        print(f"파일을 찾을 수 없습니다: {filename}")
+        return pd.DataFrame()
 
-data_21_1 = pd.read_csv("상가업소_202106/소상공인시장진흥공단_상가(상권)정보_경기_202106.csv")
-data_21_2 = pd.read_csv("상가업소_202106/소상공인시장진흥공단_상가(상권)정보_부산_202106.csv")
-data_21_3 = pd.read_csv("상가업소_202106/소상공인시장진흥공단_상가(상권)정보_서울_202106.csv")
-data_21_4 = pd.read_csv("상가업소_202106/소상공인시장진흥공단_상가(상권)정보_제주_202106.csv")
-merged_data_2021 = pd.concat([data_21_1, data_21_2, data_21_3, data_21_4], ignore_index=True)
-
-data_23_1 = pd.read_csv("상가업소_202306/소상공인시장진흥공단_상가(상권)정보_경기_202306.csv")
-data_23_2 = pd.read_csv("상가업소_202306/소상공인시장진흥공단_상가(상권)정보_부산_202306.csv")
-data_23_3 = pd.read_csv("상가업소_202306/소상공인시장진흥공단_상가(상권)정보_서울_202306.csv")
-data_23_4 = pd.read_csv("상가업소_202306/소상공인시장진흥공단_상가(상권)정보_제주_202306.csv")
-merged_data_2023 = pd.concat([data_23_1, data_23_2, data_23_3, data_23_4], ignore_index=True)
-
-
-
+# 데이터 로드
+regions = ['경기도', '서울특별시', '부산광역시', '제주특별자치도']  # 분석할 지역 목록
+merged_data_2019 = pd.concat([load_data(201906, region) for region in regions], ignore_index=True)
+merged_data_2021 = pd.concat([load_data(202106, region) for region in regions], ignore_index=True)
+merged_data_2023 = pd.concat([load_data(202306, region) for region in regions], ignore_index=True)
 
 # API URL
 url = "http://apis.data.go.kr/1352000/ODMS_COVID_04/callCovid04Api"

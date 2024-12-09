@@ -1,6 +1,6 @@
 import folium
 import pandas as pd
-from rate_17_19 import combined_2017, combined_2019
+from rate_17_19_X import combined_2017, combined_2019
 
 
 # 필요한 컬럼만 유지
