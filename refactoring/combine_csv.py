@@ -79,7 +79,7 @@ data_23 = combined_2023[['상가업소번호', '상호명', '지점명', '상권
 # 지역별로 데이터 필터링 및 저장
 def save_by_region(data, year):
     regions = ["경기도", "제주특별자치도", "부산광역시", "서울특별시"]
-    folder_path = f"./상가업소_{year}"
+    folder_path = f"./src/상가업소_{year}"
     os.makedirs(folder_path, exist_ok=True)  # 연도별 폴더 생성
     for region in regions:
         region_data = data[data['시도명'] == region]
