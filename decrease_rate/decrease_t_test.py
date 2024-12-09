@@ -95,13 +95,13 @@ if __name__ == '__main__':
     # 업종별 결과 출력
     plot_table(
         t_test_results_by_category,
-        "업종별 감소률 T-검정 결과",
+        "업종별 감소율 T-검정 결과",
         ["업종", "T-통계량", "p-value (단측)", "검정결과"],
     )
 
     # 지역별 결과 출력
     plot_table(
         t_test_results_by_category,
-        "지역별 감소률 T-검정 결과",
+        "지역별 감소율 T-검정 결과",
         ["지역", "T-통계량", "p-value (단측)", "검정결과"],
     )
