@@ -222,5 +222,9 @@ $RECYCLE.BIN/
 2017/
 2019/
 2021/
+detailed_closure_open_17_19.csv
+detailed_closure_open_19_21.csv
+overall_closure_open_17_19.csv
+overall_closure_open_19_21.csv
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,python
