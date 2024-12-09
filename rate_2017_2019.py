@@ -5,7 +5,7 @@ categories = ['소매', '음식', '관광/여가/오락', '숙박']
 
 # 데이터를 불러오는 함수 정의
 def load_data(year, region):
-    filename = f"{year}/{year}_{region}.csv"
+    filename = f"상가업소_{year}/{year}_{region}.csv"
     if os.path.exists(filename):
         return pd.read_csv(filename)
     else:
@@ -14,8 +14,8 @@ def load_data(year, region):
 
 # 데이터 로드
 regions = ['경기도', '서울특별시', '부산광역시', '제주특별자치도']  # 분석할 지역 목록
-data_17 = pd.concat([load_data(2017, region) for region in regions], ignore_index=True)
-data_19 = pd.concat([load_data(2019, region) for region in regions], ignore_index=True)
+data_17 = pd.concat([load_data(201706, region) for region in regions], ignore_index=True)
+data_19 = pd.concat([load_data(201906, region) for region in regions], ignore_index=True)
 
 # 전체 대분류 업종 폐업률 및 개업률 초기화
 overall_closure_open_rates = {category: {'폐업': 0, '총점포': 0, '개업': 0} for category in categories + ['스포츠/운동']}

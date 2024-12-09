@@ -219,12 +219,13 @@ $RECYCLE.BIN/
 *.lnk
 
 #data
-2017/
-2019/
-2021/
+상가업소_201706/
+상가업소_201906/
+상가업소_202106/
 detailed_closure_open_17_19.csv
 detailed_closure_open_19_21.csv
 overall_closure_open_17_19.csv
 overall_closure_open_19_21.csv
+closure_open_17_19.csv
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,python
