@@ -5,7 +5,7 @@ categories = ['소매', '음식', '관광/여가/오락', '숙박']
 
 # 데이터를 불러오는 함수 정의
 def load_data(year, region):
-    filename = f"상가업소_{year}/{year}_{region}.csv"
+    filename = f"./src/상가업소_{year}/{year}_{region}.csv"
     if os.path.exists(filename):
         return pd.read_csv(filename)
     else:

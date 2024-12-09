@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 from scipy.stats import pearsonr
 
 def load_data(year, region):
-    filename = f"상가업소_{year}/{year}_{region}.csv"
+    filename = f"./src/상가업소_{year}/{year}_{region}.csv"
     if os.path.exists(filename):
         return pd.read_csv(filename)
     else:

@@ -2,8 +2,8 @@ import pandas as pd
 from scipy.stats import ttest_ind
 
 # 데이터 파일 읽기
-data_17_19 = pd.read_csv('detailed_closure_open_17_19.csv')
-data_19_21 = pd.read_csv('detailed_closure_open_19_21.csv')
+data_17_19 = pd.read_csv('src/detailed_closure_open_17_19.csv')
+data_19_21 = pd.read_csv('src/detailed_closure_open_19_21.csv')
 
 # 분석에 포함할 업종과 지역 추출
 categories = data_17_19['업종'].unique()
