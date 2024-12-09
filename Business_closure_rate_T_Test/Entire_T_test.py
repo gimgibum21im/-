@@ -1,9 +1,11 @@
 import pandas as pd
 from scipy.stats import ttest_ind
+import warnings
+warnings.filterwarnings("ignore", category=pd.errors.DtypeWarning)
 
 # 파일에서 데이터 불러오기
-data_17_19 = pd.read_csv('src/overall_closure_open_17_19.csv')
-data_19_21 = pd.read_csv('src/overall_closure_open_19_21.csv')  # 19~21 데이터를 담고 있는 파일명
+data_17_19 = pd.read_csv('./src/overall_closure_open_17_19.csv')
+data_19_21 = pd.read_csv('./src/overall_closure_open_19_21.csv')  # 19~21 데이터를 담고 있는 파일명
 
 # 카테고리 목록
 categories = ['소매', '음식', '관광/여가/오락', '숙박', '스포츠/운동']

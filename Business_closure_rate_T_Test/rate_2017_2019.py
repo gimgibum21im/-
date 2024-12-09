@@ -1,5 +1,7 @@
 import os
 import pandas as pd
+import warnings
+warnings.filterwarnings("ignore", category=pd.errors.DtypeWarning)
 
 categories = ['소매', '음식', '관광/여가/오락', '숙박']
 
@@ -124,7 +126,7 @@ for category, values in overall_closure_open_rates.items():
 detailed_closure_open_df = pd.DataFrame(detailed_closure_open_rates)
 overall_closure_open_df = pd.DataFrame(overall_rates)
 
-detailed_closure_open_df.to_csv('src/detailed_closure_open_17_19.csv', index=False)
-overall_closure_open_df.to_csv('src/overall_closure_open_17_19.csv', index=False)
+detailed_closure_open_df.to_csv('./src/detailed_closure_open_17_19.csv', index=False)
+overall_closure_open_df.to_csv('./src/overall_closure_open_17_19.csv', index=False)
 
 print("\n지역별 및 전체 대분류 업종 폐업률 및 개업률 데이터가 CSV 파일로 저장되었습니다.")

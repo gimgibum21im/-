@@ -1,12 +1,14 @@
 import pandas as pd
+import warnings
+warnings.filterwarnings("ignore", category=pd.errors.DtypeWarning)
 
 # 파일 불러오기
-data_19_1 = pd.read_csv('src/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_01.csv')
-data_19_2 = pd.read_csv('src/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_03.csv')
-data_19_3 = pd.read_csv('src/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_04.csv')
-data_17_1 = pd.read_csv('src/상가업소_201706/상가업소_201706_01.csv', encoding='CP949')
-data_17_2 = pd.read_csv('src/상가업소_201706/상가업소_201706_03.csv', encoding='CP949')
-data_17_3 = pd.read_csv('src/상가업소_201706/상가업소_201706_04.csv', encoding='CP949')
+data_19_1 = pd.read_csv('./src/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_01.csv')
+data_19_2 = pd.read_csv('./src/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_03.csv')
+data_19_3 = pd.read_csv('./src/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_04.csv')
+data_17_1 = pd.read_csv('./src/상가업소_201706/상가업소_201706_01.csv', encoding='CP949')
+data_17_2 = pd.read_csv('./src/상가업소_201706/상가업소_201706_03.csv', encoding='CP949')
+data_17_3 = pd.read_csv('./src/상가업소_201706/상가업소_201706_04.csv', encoding='CP949')
 
 filtered_2019_2 = data_19_2[data_19_2['시도명'] == '경기도']
 filtered_2019_3 = data_19_3[data_19_3['시도명'] == '제주특별자치도']
