@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
     # 지역별 결과 출력
     plot_table(
-        t_test_results_by_category,
+        t_test_results_by_region,
         "지역별 감소율 T-검정 결과",
         ["지역", "T-통계량", "p-value (단측)", "검정결과"],
     )
