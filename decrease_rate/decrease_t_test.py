@@ -30,8 +30,8 @@ df_2021 = pd.DataFrame(data_2021).set_index("업종")
 # 감소율 계산
 decrease_rate = ((df_2019 - df_2021) / df_2019 * 100).round(2)
 
-# 기준값 설정 (15%)
-benchmark = 15
+# 기준값 설정 (5%)
+benchmark = 5
 
 if __name__ == '__main__':
     # 업종별 T-검정 수행
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             category,
             round(t_stat, 4),
             round(p_value_one_tailed, 6),
-            "귀무가설 기각 (평균 감소율이 15%보다 큼)" if p_value_one_tailed < 0.05 else "귀무가설 채택 (평균 감소율이 15%보다 크다고 볼 수 없음)"
+            "귀무가설 기각 (평균 감소율이 5%보다 큼)" if p_value_one_tailed < 0.05 else "귀무가설 채택 (평균 감소율이 5%보다 크다고 볼 수 없음)"
         ])
 
     # 지역별 T-검정 수행
@@ -56,7 +56,7 @@ if __name__ == '__main__':
             region,
             round(t_stat, 4),
             round(p_value_one_tailed, 6),
-            "귀무가설 기각 (평균 감소율이 15%보다 큼)" if p_value_one_tailed < 0.05 else "귀무가설 채택 (평균 감소율이 15%보다 크다고 볼 수 없음)"
+            "귀무가설 기각 (평균 감소율이 5%보다 큼)" if p_value_one_tailed < 0.05 else "귀무가설 채택 (평균 감소율이 5%보다 크다고 볼 수 없음)"
         ])
 
     # 결과 출력

@@ -30,8 +30,8 @@ df_2023 = pd.DataFrame(data_2023).set_index("업종")
 # 회복률 계산
 recovery_rate = (df_2023 / df_2019 * 100).round(2)
 
-# 기준값 설정 (85%)
-benchmark = 85
+# 기준값 설정 (95%)
+benchmark = 95
 
 if __name__ == '__main__':
     # 업종별 T-검정 수행
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             industry,
             round(t_stat, 4),
             round(p_value_one_tailed, 6),
-            "귀무가설 기각 (평균 회복률이 85%보다 큼)" if p_value_one_tailed < 0.05 else "귀무가설 채택 (평균 회복률이 85%보다 크다고 볼 수 없음)"
+            "귀무가설 기각 (평균 회복률이 95%보다 큼)" if p_value_one_tailed < 0.05 else "귀무가설 채택 (평균 회복률이 95%보다 크다고 볼 수 없음)"
         ])
 
     # 지역별 T-검정 수행
@@ -56,7 +56,7 @@ if __name__ == '__main__':
             region,
             round(t_stat, 4),
             round(p_value_one_tailed, 6),
-            "귀무가설 기각 (회복률이 85%보다 큼)" if p_value_one_tailed < 0.05 else "귀무가설 채택 (회복률이 85%보다 크다고 볼 수 없음)"
+            "귀무가설 기각 (회복률이 95%보다 큼)" if p_value_one_tailed < 0.05 else "귀무가설 채택 (회복률이 95%보다 크다고 볼 수 없음)"
         ])
 
     # 결과 데이터프레임 생성
