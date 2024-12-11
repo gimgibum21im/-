@@ -5,9 +5,10 @@ warnings.filterwarnings("ignore", category=pd.errors.DtypeWarning)
 
 # 파일 경로 설정
 file_paths_2019 = {
-    "01": "src/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_01.csv",
-    "03": "src/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_03.csv",
-    "04": "src/상가업소_201906/소상공인시장진흥공단_상가업소정보_201906_04.csv"
+    "경기": "src/상가업소_201906/201906_경기도.csv",
+    "부산": "src/상가업소_201906/201906_부산광역시.csv",
+    "서울": "src/상가업소_201906/201906_서울특별시.csv",
+    "제주": "src/상가업소_201906/201906_제주특별자치도.csv"
 }
 
 # 업종별 대분류 및 중분류 매핑 (2019년 기준)
@@ -19,28 +20,26 @@ category_mapping_2019 = {
     "숙박": ["숙박"]
 }
 
-# 필요한 지역 설정
-regions_01 = ['서울특별시', '부산광역시']
-regions_03 = ['경기도']
-regions_04 = ['제주특별자치도']
-
 # 데이터 병합용 리스트
 filtered_data_list_2019 = []
 
-# 01 데이터 처리
-data_01 = pd.read_csv(file_paths_2019["01"], encoding="utf-8")
-filtered_01 = data_01[data_01["시도명"].isin(regions_01)]
-filtered_data_list_2019.append(filtered_01)
+# 파일 읽기 및 필터링 함수
+def read_and_filter(file_path):
+    try:
+        # 데이터 읽기
+        data = pd.read_csv(file_path, encoding="utf-8")
+        # 필터링
+        #filtered_data = data[data["시도명"].isin(regions)]
+        return data 
+    except:
+        print("something worng")
+    return pd.DataFrame()  # 빈 데이터프레임 반환
 
-# 03 데이터 처리
-data_03 = pd.read_csv(file_paths_2019["03"], encoding="utf-8")
-filtered_03 = data_03[data_03["시도명"].isin(regions_03)]
-filtered_data_list_2019.append(filtered_03)
-
-# 04 데이터 처리
-data_04 = pd.read_csv(file_paths_2019["04"], encoding="utf-8")
-filtered_04 = data_04[data_04["시도명"].isin(regions_04)]
-filtered_data_list_2019.append(filtered_04)
+# 파일별 데이터 처리
+for key, path in file_paths_2019.items():
+    data = read_and_filter(path)
+    if not data.empty:
+        filtered_data_list_2019.append(data)
 
 # 모든 데이터를 병합
 merged_data_2019 = pd.concat(filtered_data_list_2019, ignore_index=True)
